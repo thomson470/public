@@ -1,0 +1,158 @@
+{
+	"variables": [],
+	"info": {
+		"name": "IDH-TEMPLATE-DJANGO",
+		"_postman_id": "4f1e0af1-27b7-f5ce-e851-e171411b8625",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"description": "",
+			"item": [
+				{
+					"name": "AUTH",
+					"description": "",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"url": "{{api}}/auth/login",
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "adminsys",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "adminsys",
+											"description": "",
+											"type": "text"
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Profile",
+							"request": {
+								"url": "{{api}}/auth/profile",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Key",
+										"value": "3dc450b0-0b4d-11e8-be37-48d224cb39be",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"url": "{{api}}/auth/logout",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Key",
+										"value": "3dc450b0-0b4d-11e8-be37-48d224cb39be",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "MODEL",
+					"description": "",
+					"item": [
+						{
+							"name": "Menu",
+							"description": "",
+							"item": [
+								{
+									"name": "Page",
+									"request": {
+										"url": "{{api}}/model/Menu/page/1/4/1",
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "List",
+									"request": {
+										"url": {
+											"raw": "{{api}}/model/Menu/list/3?p_filter=title:icontains:tes|active::1&p_order=title,-id",
+											"host": [
+												"{{api}}"
+											],
+											"path": [
+												"model",
+												"Menu",
+												"list",
+												"3"
+											],
+											"query": [
+												{
+													"key": "p_filter",
+													"value": "title:icontains:tes|active::1",
+													"equals": true,
+													"description": ""
+												},
+												{
+													"key": "p_order",
+													"value": "title,-id",
+													"equals": true,
+													"description": ""
+												}
+											],
+											"variable": []
+										},
+										"method": "GET",
+										"header": [],
+										"body": {},
+										"description": ""
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "REST",
+			"description": "",
+			"item": []
+		}
+	]
+}

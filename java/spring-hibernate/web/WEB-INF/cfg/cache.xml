@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+    <bean id="cacheService" class="com.ideahut.shared2.service.impl.CacheServiceImpl">
+        <!-- <property name="cacheDestroyerSender" ref="cacheDestroyerSender" /> -->
+        <property name="logService" ref="logService" />
+        <property name="defaultLimit" value="${cache.default.limit}" />
+		<property name="defaultAge" value="${cache.default.age}" />
+		<property name="defaultAllowNull" value="${cache.default.allowNull}" />
+		<property name="onlyRegisterGroup" value="${cache.onlyRegisterGroup}"/>
+		<property name="groupMap">
+			<map>
+			    <entry key="ACCESS_ID">
+			    	<bean class="com.ideahut.shared2.bean.CacheGroupBean">
+			    		<property name="limit" value="100"/>
+			    		<property name="age" value="0"/>
+			    		<property name="allowNull" value="true"/>
+			    	</bean>	
+			    </entry>
+			    <entry key="ACCESS_ROLE">
+			    	<bean class="com.ideahut.shared2.bean.CacheGroupBean">
+			    		<property name="limit" value="10"/>
+			    		<property name="age" value="0"/>
+			    		<property name="allowNull" value="true"/>
+			    	</bean>	
+			    </entry>
+			    
+			    <entry key="API_LIST">
+			    	<bean class="com.ideahut.shared2.bean.CacheGroupBean">
+			    		<property name="limit" value="10"/>
+			    		<property name="age" value="0"/>
+			    		<property name="allowNull" value="true"/>
+			    	</bean>	
+			    </entry>
+			    
+			    <entry key="TEST">
+			    	<bean class="com.ideahut.shared2.bean.CacheGroupBean">
+			    		<property name="limit" value="100"/>
+			    		<property name="age" value="0"/>
+			    		<property name="allowNull" value="true"/>
+			    	</bean>	
+			    </entry>
+			    		    
+			</map>
+		</property>
+	</bean>
+	
+</beans>

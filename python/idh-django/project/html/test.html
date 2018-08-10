@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>TEST</h1>
+<h2>{{ context.message }}</h2>
+<p>{{ context }}</p>
+{% endblock %}
+{% block script %}
+<script>
+    var X = 'test';
+</script>
+{% endblock %}
+

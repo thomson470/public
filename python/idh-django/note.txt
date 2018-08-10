@@ -1,0 +1,35 @@
+1. Buat folder project
+2. virtualenv env
+3. Untuk spesifik python yang digunakan virtualenv -p /usr/local/bin/python3 env
+4. env\Scripts\activate
+4. pip install django
+5. django-admin startproject project
+6. Masuk ke folder project
+7. Buat folder apps
+8. Masuk ke folder apps
+9. python ..\manage.py startapp core
+10. python ..\manage.py startapp api
+11. python ..\manage.py startapp web
+12. Buat folder static dan media
+13. python manage.py collectstatic (untuk mengambil resource css, js, dll dari applikasi admin)
+14. python manage.py createsuperuser
+15. python manage.py runserver
+
+Note pypy:
+1. pip install PyMySQL
+2. Tambahkan di manage.py:
+	import pymysql
+	pymysql.install_as_MySQLdb()
+
+https://tutorialedge.net/
+
+PyPi
+====
+1. python -m compileall .
+2. copy pyc dari __pycache__ dan rename dengan menghilangkan tagnya (mungkin sebaiknya dibuat script)
+3. python setup.py sdist
+4. python setup.py sdist upload
+5. https://packaging.python.org/guides/migrating-to-pypi-org/#uploading
+6. python setup.py sdist upload -r pypitest
+7. twine upload dist\idh-django-0.1.zip
+

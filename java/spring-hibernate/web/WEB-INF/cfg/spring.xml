@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+    
+    <!-- PROPERTY -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties" ref="props" />    
+	</bean>
+	<bean id="props" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	  	<property name="location" value="/WEB-INF/cfg/context.properties"/>
+	</bean>
+		
+	
+	<!-- TASK EXECUTOR -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	    <property name="corePoolSize" value="${task.executor.corePoolSize}" />
+	    <property name="maxPoolSize" value="${task.executor.maxPoolSize}" />
+	</bean>
+	
+	
+	<!-- VIEW RESOLVER -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	    <property name="order" value="1" />
+	    <property name="ignoreAcceptHeader" value="true" />
+	    <property name="mediaTypes">
+	        <map>
+	            <entry key="page"  value="text/html"/>
+	            <entry key="txt"   value="text/plain"/>
+	            <entry key="xml"   value="application/xml"/>
+	            <entry key="json"  value="application/json"/>
+	        </map>
+	    </property>
+	    <property name="defaultViews">
+	        <list>
+	            <bean class="com.ideahut.shared2.view.BasicJsonView"/>
+	            <bean class="com.ideahut.shared2.view.BasicXmlView"/>
+	            <bean class="com.ideahut.shared2.view.BasicJtxtView"/>
+	        </list>
+	    </property>
+	    <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+	</bean>
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	    <property name="favorPathExtension" value="true"/>  
+		<property name="ignoreAcceptHeader" value="true" />  
+		<property name="defaultContentType" value="application/json" />  
+		<property name="useJaf" value="false"/>		
+		<property name="mediaTypes">  
+			<map>  
+				<entry key="page" value="text/html" />  
+				<entry key="json" value="application/json" />  
+				<entry key="xml"  value="application/xml" />
+				<entry key="txt"  value="text/plain" />  
+			</map>  
+		</property>		
+	</bean>
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2" />
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,241 @@
+PAGE
+====
+from apps.core.basic.dao import BasicDao
+l = BasicDao.page({
+	'model': 'apps.core.models.menu.Menu',
+	'page': {'index': 1, 'limit': 2, 'count': True},
+	'filter': {'title__icontains': 'coba'},
+	'order': ['-title']
+})
+
+l = BasicDao.page({
+	'model': 'apps.core.models.menu.Menu',
+	'page': {'index': 1, 'limit': 2, 'count': True},
+	'filter': {'title__icontains': 'coba'},
+	'field': ['id', 'title'],
+	'order': ['-title']
+})
+
+
+LIST
+====
+from apps.core.basic.dao import BasicDao
+l = BasicDao.list({
+	'model': 'apps.core.models.menu.Menu',
+	'filter': {'title__icontains': 'coba'},
+	'order': ['-title']
+})
+
+l = BasicDao.list({
+	'model': 'apps.core.models.menu.Menu',
+	'filter': {'title__icontains': 'coba'},
+	'field': 'id,title',
+	'order': ['-title']
+})
+
+
+GET
+===
+from apps.core.basic.dao import BasicDao
+b = BasicDao.get({
+	'model': 'apps.core.models.menu.Menu',
+	'pk': 13
+})
+
+b = BasicDao.get({
+	'model': 'apps.core.models.menu.Menu',
+	'filter': {'title__icontains': 's'}
+})
+
+b = BasicDao.get({
+	'model': 'apps.core.models.menu.MenuGroup',
+	'pk': 1,
+	'field': []
+})
+
+
+CREATE
+======
+from apps.core.basic.dao import BasicDao
+b = BasicDao.create({
+	'model': 'apps.core.models.menu.Menu',
+	'data': {'title': 'Test'}
+})
+
+
+UPDATE
+======
+from apps.core.basic.dao import BasicDao
+b = BasicDao.update({
+	'model': 'apps.core.models.menu.Menu',
+	'pk': 13,
+	'data': {'title': 'TestUpdate', 'active': 0, 'parent': 5}
+})
+
+
+DELETE
+======
+from apps.core.basic.dao import BasicDao
+b = BasicDao.delete({
+	'model': 'apps.core.models.menu.Menu',
+	'pk': [9, 11]
+})
+
+
+
+FIELDS
+======
+from apps.core.models import Menu
+fields = Menu._meta.get_fields()
+for f in fields:
+	print(f.name)
+	print(f.model)
+	print(f.null)
+	print(f.is_relation)
+	print(f.related_model)
+	print('============')
+
+
+
+USER
+====
+from django.contrib.auth.models import User
+u = User.objects.get(pk=19)
+
+
+ModelApi
+========
+from apps.core.basic.api import ModelApi
+from apps.core.models.menu import Menu
+ModelApi.register(Menu)
+
+
+API BASIC
+=========
+from apps.core.basic.api import BasicApi
+b = BasicApi.page({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['1','2','1'],
+	'parameters': {'title': ['coba']},
+	'field': ['id', 'title']
+})
+
+from apps.core.basic.api import BasicApi
+b = BasicApi.list({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['3'],
+	'parameters': {'title': ['coba']},
+	'field': ['id', 'title']
+})
+
+from apps.core.basic.api import BasicApi
+b = BasicApi.get({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['5']
+})
+
+from apps.core.basic.api import BasicApi
+b = BasicApi.create({
+	'model': 'apps.core.models.menu.Menu',
+	'parameters': {'title': 'Pake Api neh'}
+})
+
+from apps.core.basic.api import BasicApi
+b = BasicApi.update({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['15'],
+	'parameters': {'title': 'Diupdate Pake Api neh', 'active': 0}
+})
+
+from apps.core.basic.api import BasicApi
+b = BasicApi.update({
+	'model': 'apps.core.models.menu.Menu',
+	'parameters': {'id': ['15'], 'title': ['Diupdate2 Pake Api neh'], 'active': ['1']}
+})
+
+from apps.core.basic.api import BasicApi
+b = BasicApi.delete({
+	'model': 'apps.core.models.menu.Menu',
+	'parameters': {'id': ['15,13']}
+})
+
+
+API WITH REGISTRY
+=================
+import apps.api.apis
+from apps.core.basic.api import BasicApi
+b = BasicApi.list({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['3'],
+	'parameters': {'title': ['coba']},
+	'field': ['id', 'title']
+})
+
+API WITH REGISTRY AND USER
+==========================
+import apps.api.apis
+from django.contrib.auth.models import User
+from apps.core.basic.api import BasicApi
+user = User.objects.get(pk=1)
+b = BasicApi.list({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['3'],
+	'parameters': {'title': ['coba']},
+	'field': ['id', 'title'],
+	'user': user
+})
+
+b = BasicApi.get({
+	'model': 'apps.core.models.menu.Menu',
+	'path': ['12'],
+	'user': user
+})
+print(b.parent)
+
+
+FORMATTER
+=========
+from apps.core.formatter.base import Formatter
+fmt = Formatter.create('apps.core.formatter.json.JSONFormatter')
+
+from apps.core.formatter.json import JSONFormatter
+from django.contrib.auth.models import User
+user = User.objects.get(pk=1)
+fmt = JSONFormatter()
+fmt.content_data(user)
+
+from apps.core.formatter.xml import XMLFormatter
+from django.contrib.auth.models import User
+user = User.objects.get(pk=1)
+fmt = XMLFormatter()
+fmt.content_data(user)
+
+
+CONSTRUCTOR
+===========
+from apps.core.basic.api import ViewApi
+v = ViewApi(test=1)
+
+
+ACCESS
+======
+from apps.core.access import User as AccessUser
+from django.contrib.auth.models import User
+u = User.objects.get(pk=1)
+a = AccessUser(user=u)
+a.get_group_permissions()
+
+
+URL ENCODE / DECODE
+===================
+import base64
+>>> url.encode('utf-8')
+b'http://localhost:8000/api?a=1&b=2'
+>>> a = base64.urlsafe_b64encode(url.encode()).decode()
+>>> print(a)
+aHR0cDovL2xvY2FsaG9zdDo4MDAwL2FwaT9hPTEmYj0y
+>>> c = base64.urlsafe_b64decode(a).decode()
+>>> print(c)
+http://localhost:8000/api?a=1&b=2
+>>>
+

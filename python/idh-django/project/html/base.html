@@ -1,0 +1,231 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="author" content="{{ settings.author }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>{{ settings.title }}</title>
+		<link rel="icon" href="{% static '' %}{{ settings.static }}/images/favicon.ico" />
+	    <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/fonts/font-awesome/font-awesome.min.css" />
+        <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/fonts/ionicons/ionicons.min.css" />
+        <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/css/AdminLTE.min.css" />
+        <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/css/skins/{{ settings.skin }}" />
+        <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/css/custom.css" />
+        <link rel="stylesheet" href="{% static '' %}{{ settings.static }}/css/table-responsive.css" />
+        <meta name="robots" content="NONE,NOARCHIVE" />
+        {% block head %}{% endblock %}
+	</head>
+    {# <body class="hold-transition skin-green sidebar-mini"> #}
+    {# <body class="hold-transition skin-blue sidebar-mini sidebar-collapse"> #}
+    <body class="hold-transition skin-blue sidebar-mini sidebar-mini fixed">
+
+        {# Site wrapper #}
+        <div class="wrapper">
+            <header class="main-header" style="width: 100%;">
+                {# Logo #}
+                <a href="{{ settings.path.home }}" class="logo"> {# mini logo for sidebar mini 50x50 pixels #}
+                    <span class="logo-mini">
+                        <div class="pull-left image">
+                            <img src="{% static '' %}{{ settings.static }}/images/logo.png" class="img-circle" alt="">
+                        </div>
+                    </span>
+                    <span class="logo-lg">
+                        <div class="pull-left image">
+                            <img src="{% static '' %}{{ settings.static }}/images/logo.png" class="img-circle" alt="">
+                        </div>
+                        <b>{% autoescape off %}{{ settings.header }}{% endautoescape %}</b>
+                    </span>
+                </a>
+                {# Header Navbar: style can be found in header.less #}
+                <nav class="navbar navbar-static-top" role="navigation">
+                    {# Sidebar toggle button #}
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" onclick="$.idh.sidebar.click()">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            {# User Account: style can be found in dropdown.less #}
+                            {% if request.user.username != '' %}
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-user"></i>
+                                    {% if request.user.first_name != '' %}
+                                        <span class="hidden-xs">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                                    {% else %}
+                                        <span class="hidden-xs">{{ request.user.username }}</span>
+                                    {% endif %}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {# User image #}
+                                    <li class="user-header">
+                                        <img src="{% static '' %}{{ settings.static }}/images/user.png" class="img-circle" alt="">
+                                        <p>
+                                            <br/>
+                                            {{ request.user.first_name }} {{ request.user.last_name }}
+                                            <small>Register: {{ request.user.date_joined|date:"Y-m-d H:i" }}</small>
+                                            <small>Login: {{ request.user.last_login|date:"Y-m-d H:i" }}</small>
+                                        </p>
+                                    </li>
+                                    {# Menu Body #}
+                                    {% comment %}
+                                    <li class="user-body">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </li>
+                                    {% endcomment %}
+                                    {# Menu Footer #}
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="{{ settings.path.logout }}" class="btn btn-default btn-flat">Logout</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li class="messages-menu">
+                                <a href="{{ settings.path.login }}">
+                                    <i class="fa fa-sign-in"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            {# =============================================== #}
+
+            {# Left side column. contains the sidebar #}
+            <aside class="main-sidebar">
+                {# sidebar: style can be found in sidebar.less #}
+                <section class="sidebar">
+                    {# sidebar menu: : style can be found in sidebar.less #}
+                    <ul class="sidebar-menu">
+                        {% include "menu.html" %}
+                    </ul>
+                </section>
+                {# /.sidebar #}
+            </aside>
+
+            {# =============================================== #}
+
+            {# Content Wrapper. Contains page content #}
+            <div class="content-wrapper">
+                {% comment %}
+                # TODO: Header Page Title
+                <c:if test="${not empty thisPageMenu}">
+                    <section class="content-header">
+                        <h1>
+                            <c:choose>
+                                <c:when test="${empty thisPageMenu.icon}">
+                                    <i class="fa fa-circle-o"></i>
+                                </c:when>
+                                <c:when test="${fn:startsWith(thisPageMenu.icon, 'class:')}">
+                                    <i class="${fn:substring(thisPageMenu.icon,6,fn:length(thisPageMenu.icon))}"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <img alt="" src="${thisPageMenu.icon}" class="menu-title">
+                                </c:otherwise>
+                            </c:choose>
+                            ${thisPageMenu.title} <c:if test="${not empty thisPageMenu.description}"><small>${thisPageMenu.description}</small></c:if>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li><a href="${thisWebPath}/private/view/home/index${thisPageExt}"><i class="fa fa-home"></i> Home</a></li>
+                            <c:if test="${not empty thisPageMenu.parent.parent.title}">
+                                <li><a href="<c:choose><c:when test="${thisPageMenu.parent.parent.link}">${thisPageMenu.parent.parent.link}</c:when><c:otherwise>#</c:otherwise></c:choose>">${thisPageMenu.parent.parent.title}</a></li>
+                            </c:if>
+                            <c:if test="${not empty thisPageMenu.parent.title}">
+                                <li><a href="<c:choose><c:when test="${thisPageMenu.parent.link}">${thisPageMenu.parent.link}</c:when><c:otherwise>#</c:otherwise></c:choose>">${thisPageMenu.parent.title}</a></li>
+                            </c:if>
+                            <li class="active">${thisPageMenu.title}</li>
+                        </ol>
+                    </section>
+                </c:if>
+                {% endcomment %}
+
+                <section class="content">
+                    {% block content %}{% endblock %}
+                </section>
+
+            </div>
+            {# /.content-wrapper #}
+
+            {% autoescape off %}
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">{{ settings.version }}</div>{{ settings.copyright }}
+            </footer>
+            {% endautoescape %}
+        </div>
+        {# ./wrapper #}
+
+        <div aria-hidden="true" role="dialog" tabindex="-1" id="mAlertDialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="mHeader" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body" style="max-height: 400px; overflow: auto;">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="mBtnOk" class="btn btn-primary" type="button" data-dismiss="modal">Oke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div aria-hidden="true" role="dialog" tabindex="-1" id="mConfirmDialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-confirm">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body" style="max-height: 400px; overflow: auto;">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger mBtnNo" type="button" data-dismiss="modal">Tidak</button>
+                        <button class="btn btn-success mBtnYes" type="button">Ya</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mLoaderDialog" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+           <div class="modal-dialog modal-sm">
+               <div class="modal-content">
+                   <div class="modal-body" style="text-align: center;">
+                        <p><img border="0" src="{% static '' %}{{ settings.static }}/images/loader.gif"/></p>
+                        <p>Harap tunggu...</p>
+                   </div>
+               </div>
+           </div>
+        </div>
+
+        <script data-cfasync="false" src="{% static '' %}{{ settings.static }}/js/jquery.min.js"></script>
+        <script data-cfasync="false" src="{% static '' %}{{ settings.static }}/js/bootstrap.min.js"></script>
+        <script data-cfasync="false" src="{% static '' %}{{ settings.static }}/js/jquery.slimscroll.min.js"></script>
+        <script data-cfasync="false" src="{% static '' %}{{ settings.static }}/js/app.min.js"></script>
+        <script data-cfasync="false" src="{% static '' %}{{ settings.static }}/js/idh.gui.js"></script>
+        {% block script %}{% endblock %}
+    </body>
+</html>

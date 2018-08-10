@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
+
+	<tx:annotation-driven />
+	
+	<!-- IMPORT -->
+	<import resource="spring.xml"/>
+	<import resource="datasource.xml"/>
+	<import resource="cache.xml"/>
+		
+	
+	<!-- CONTEXT -->
+	<bean class="com.ideahut.shared2.bean.ContextBean">
+	    <property name="cacheService" ref="cacheService"/>
+	    <property name="logService" ref="logService"/>
+	    <!-- <property name="useSimpleName" value="true"/> -->
+	    <property name="trxMgrSession">
+	        <list>
+	            <bean class="com.ideahut.shared2.bean.TrxMgrSessionBean">
+	                <property name="sessionFactoryId" value="sessionFactory"/>
+	                <property name="transactionManagerId" value="transactionManager"/>
+	            </bean>
+	        </list>
+	    </property>
+	    <property name="classes">
+        	<list>
+        	    <value>com.ideahut.shared2.dao.AuditDao</value>
+        	</list>
+        </property>
+	  	<property name="packages">
+        	<list>
+        	    <value>com.sprint.sms.api</value>
+        	</list>
+        </property>        
+	</bean>
+	
+	
+	<!-- SCANNER -->
+	<context:annotation-config />	
+    <context:component-scan base-package="com.sprint.sms.api"/>	
+	
+	
+	<!-- LOGGER -->
+	<bean id="logService" class="com.ideahut.shared2.service.impl.LogServiceImpl">
+	   <property name="name" value="${log.name}"/>
+	</bean>
+	
+	
+	<!-- FILTER -->
+	<bean id="gzip.filter" class="com.ideahut.shared2.filter.GzipFilter"/>	
+	<bean id="request.filter" class="com.sprint.sms.api.filter.RequestFilter"/>
+	
+</beans>

@@ -1,0 +1,288 @@
+{
+	"public": [
+		{
+			"path": "/access/login",
+			"description": "Login",
+			"parameter": {
+				"uname": "string",
+				"utime": "string",
+				"upass": "string"
+			}
+		},
+		{
+			"path": "/access/logout",
+			"description": "Logout"
+		},
+		{
+			"path": "/access/menu",
+			"description": "Menu"
+		},
+		{
+			"path": "/access/api/group",
+			"description": "Mendapatkan daftar API Group"
+		},
+		{
+			"path": "/access/api/list",
+			"description": "Mendapatkan daftar API Group",
+			"parameter": {
+				"group": "string"
+			}
+		},
+		{
+			"path": "/access/app/constant",
+			"description": "Mendapatkan daftar konstanta yang tersedia"
+		},
+		
+		
+		{
+			"path": "/test/object/cascade"
+		},
+		{
+			"path": "/test/object/copy"
+		},
+		{
+			"path": "/test/convert/params"
+		},
+		{
+			"path": "/test/convert/body"
+		},
+		{
+			"path": "/test/cache/get"
+		},
+		{
+			"path": "/test/cache/get/0"
+		},
+		{
+			"path": "/test/cache/remove"
+		},
+		{
+			"path": "/test/cache/clear"
+		},
+		{
+			"path": "/test/api/private"
+		},
+		{
+			"path": "/test/api/public"
+		}		
+	],	
+	
+	
+	"private": [		
+		{
+			"path": "/access/profile",
+			"description": "Profil"
+		},		
+		{
+			"path": "/access/cache/clear",
+			"description": "Membersihkan cache di memory berdasarkan groupnya, pemisah menggunakan koma",
+			"parameter": {
+				"group": "string"
+			}
+		},
+		
+		
+		{
+			"path": "/menu/all",
+			"description": "Melihat semua daftar menu yang tersedia"
+		},
+		{
+			"path": "/menu/sort",
+			"description": "Mengurutkan keatas atau kebawah prioritas menu yang akan ditampilkan",
+			"parameter": {
+				"id": "long",
+				"up": "boolean (1 / 0)"
+			}
+		},
+		{
+			"path": "/menu/create",
+			"description": "Membuat menu baru",
+			"parameter": {
+				"title": "string",
+				"link": "string",
+				"icon": "string",
+				"description": "string",
+				"active": "boolean",
+				"parent-id": "long",
+				"global": "boolean"
+			}
+		},
+		{
+			"path": "/menu/update",
+			"description": "Memperbaharui menu",
+			"parameter": {
+				"id": "long",
+				"title": "string",
+				"link": "string",
+				"icon": "string",
+				"description": "string",
+				"active": "boolean",
+				"parent-id": "long",
+				"global": "boolean"
+			}
+		},
+		{
+			"path": "/menu/delete",
+			"description": "Menghapus menu",
+			"parameter": {
+				"id": "long"
+			}
+		},
+		
+		
+		{
+			"path": "/role/search",
+			"description": "Melihat daftar Role yang tersedia",
+			"parameter": {
+				"p_index": "int",
+				"p_size": "int",
+				"p_order": "string",
+				"name": "string",
+				"active": "boolean"
+			}
+		},
+		{
+			"path": "/role/view",
+			"description": "Melihat Role berdasarkan id",
+			"parameter": {
+				"id": "long"
+			}
+		},
+		{
+			"path": "/role/create",
+			"description": "Membuat Role baru",
+			"parameter": {
+				"name": "string",
+				"active": "boolean"
+			}
+		},
+		{
+			"path": "/role/update",
+			"description": "Memperbaharui Role",
+			"parameter": {
+				"id": "long",
+				"name": "string",
+				"active": "boolean"
+			}
+		},
+		{
+			"path": "/role/delete",
+			"description": "Menghapus Role",
+			"parameter": {
+				"id": "long"
+			}
+		},
+		{
+			"path": "/role/path/list",
+			"description": "Melihat daftar API dari satu Role",
+			"parameter": {
+				"role-id": "long",
+				"path": "string"
+			}
+		},
+		{
+			"path": "/role/path/save",
+			"description": "Meregister API untuk satu Role",
+			"parameter": {
+				"role-id": "long",
+				"path": "string"
+			}
+		},
+		{
+			"path": "/role/path/delete",
+			"description": "Menghapus API dari satu Role",
+			"parameter": {
+				"id": "string"
+			}
+		},
+		{
+			"path": "/role/path/trash",
+			"description": "Membersihkan API yang tidak terdaftar",
+			"parameter": {
+				"role-id": "long"
+			}
+		},
+		{
+			"path": "/role/menu/list",
+			"description": "Melihat daftar Menu dari satu Role",
+			"parameter": {
+				"role-id": "long"
+			}
+		},
+		{
+			"path": "/role/menu/save",
+			"description": "Meregister Menu ke satu Role, disertai aksi untuk setiap halaman",
+			"parameter": {
+				"role-id": "long",
+				"menu-id": "long",
+				"action": "string"
+			}
+		},
+		{
+			"path": "/role/menu/delete",
+			"description": "Menghapus Menu dari satu Role",
+			"parameter": {
+				"id": "string"
+			}
+		},
+		
+		
+		
+		{
+			"path": "/user/search",
+			"description": "Melihat daftar User yang tersedia",
+			"parameter": {
+				"p_index": "int",
+				"p_size": "int",
+				"p_order": "string",
+				"name": "string",
+				"email": "string",
+				"active": "boolean"
+			}
+		},
+		{
+			"path": "/user/view",
+			"description": "Melihat Menu berdasarkan Id",
+			"parameter": {
+				"id": "long"
+			}
+		},
+		{
+			"path": "/user/create",
+			"description": "Membuat Menu baru",
+			"parameter": {
+				"role-id": "long",
+				"name": "string",
+				"password": "string",
+				"firstName": "string",
+				"lastName": "string",
+				"phone": "string",
+				"email": "string",
+				"active": "boolean"
+			}
+		},
+		{
+			"path": "/user/update",
+			"description": "Membuat Menu baru",
+			"parameter": {
+				"id": "long",
+				"role-id": "long",
+				"name": "string",
+				"password": "string",
+				"firstName": "string",
+				"lastName": "string",
+				"phone": "string",
+				"email": "string",
+				"active": "boolean"
+			}
+		},
+		{
+			"path": "/user/delete",
+			"description": "Menghapus Menu berdasarkan Id",
+			"parameter": {
+				"id": "long"
+			}
+		}
+				
+		
+	]
+}

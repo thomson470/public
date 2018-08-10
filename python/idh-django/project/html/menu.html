@@ -1,0 +1,73 @@
+{% if menus is not None %}
+    {% for menu in menus %}
+        {% if menu.parent is None and menu.link == '---' %}
+            <li class="header"><strong>{% autoescape off %}{{ menu.title }}{% endautoescape %}</strong></li>
+        {% else %}
+            <li class="treeview">
+                    {% if menu.link is None or menu.link == '' %}
+                    <a href="#">
+                    {% else %}
+                    <a href="{{ menu.link }}">
+                    {% endif %}
+                        {% if menu.icon is None or menu.icon == '' %}
+                        <i class="fa fa-square"></i>
+                        {% elif menu.icon|slice:'0:6' == 'class:' %}
+                        <i class="{{ menu.icon|slice:'6:' }}"></i>
+                        {% else %}
+                        <img alt="" src="{{ menu.icon }}" class="menu-list">
+                        {% endif %}
+                        <span>{% autoescape off %}{{ menu.title }}{% endautoescape %}</span>
+                        {% if menu.children %}
+                        <i class="fa fa-angle-left pull-right"></i>
+                        {% endif %}
+                    </a>
+                    {% if menu.children %}
+                        <ul class="treeview-menu">
+                            {% for child in menu.children %}
+                                <li>
+                                    {% if child.link is None or child.link == '' %}
+                                    <a href="#">
+                                    {% else %}
+                                    <a href="{{ child.link }}">
+                                    {% endif %}
+                                        {% if child.icon is None or child.icon == '' %}
+                                        <i class="fa fa-circle-o"></i>
+                                        {% elif child.icon|slice:'0:6' == 'class:' %}
+                                        <i class="{{ child.icon|slice:'6:' }}"></i>
+                                        {% else %}
+                                        <img alt="" src="{{ child.icon }}" class="menu-list">
+                                        {% endif %}
+                                        {% autoescape off %}{{ child.title }}{% endautoescape %}
+                                    {% if child.children %}
+                                        <i class="fa fa-angle-left pull-right"></i></a>
+                                        <ul class="treeview-menu">
+                                            {% for grandchild in child.children %}
+                                                <li>
+                                                    {% if grandchild.link is None or grandchild.link == '' %}
+                                                    <a href="#">
+                                                    {% else %}
+                                                    <a href="{{ grandchild.link }}">
+                                                    {% endif %}
+                                                        {% if grandchild.icon is None or grandchild.icon == '' %}
+                                                        <i class="fa fa-circle-o"></i>
+                                                        {% elif grandchild.icon|slice:'0:6' == 'class:' %}
+                                                        <i class="{{ grandchild.icon|slice:'6:' }}"></i>
+                                                        {% else %}
+                                                        <img alt="" src="{{ grandchild.icon }}" class="menu-list"/>
+                                                        {% endif %}
+                                                        {% autoescape off %}{{ grandchild.title }}{% endautoescape %}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+        {% endif %}
+    {% endfor %}
+{% endif %}
