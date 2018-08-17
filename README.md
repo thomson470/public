@@ -1,4 +1,4 @@
 Kumpulan Project-project:
-- Phyton
+- Python
 - Java
 - PHP
